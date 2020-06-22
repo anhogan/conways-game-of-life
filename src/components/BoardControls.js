@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 
+import { UserButtons, ButtonDiv } from './Styles';
+
 class BoardControls extends Component {
   render() {
     return (
       <div>
-        <div>
-          <button onClick={this.props.startGame}>Start</button>
-          <button onClick={this.props.stopGame}>Stop</button>
-          <button onClick={this.props.clearGrid}>Clear</button>
-        </div>
+        <ButtonDiv>
+          <UserButtons onClick={this.props.startGame}>Start</UserButtons>
+          <UserButtons onClick={this.props.stopGame}>Stop</UserButtons>
+          <UserButtons onClick={this.props.clearGrid}>Clear</UserButtons>
+        </ButtonDiv>
       </div>
     );
   };

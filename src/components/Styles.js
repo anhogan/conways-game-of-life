@@ -115,3 +115,28 @@ export const Labels = styled.label`
   font-size: 1.2rem;
   color: midnightblue;
 `;
+
+export const ButtonDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 150%;
+  margin-left: -25%;
+`;
+
+export const UserButtons = styled.button`
+  border: 0;
+  background: mediumspringgreen;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  line-height: 1;
+  margin: 1% 7%;
+  &:hover {
+    cursor: pointer;
+    background: midnightblue;
+    color: white;
+  };
+  &:focus {
+    outline: none
+  }
+`;
