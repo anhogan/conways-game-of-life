@@ -15,11 +15,11 @@ class Grid extends Component {
     evolution: new Evolution()
   };
 
-  setCellState = (cell) => {
-    if (!this.state.running) {
-      this.setState({ evolution: this.state.evolution.setCellState(cell) });
-    };
-  };
+  // setCellState = (cell) => {
+  //   if (!this.state.running) {
+  //     this.setState({ evolution: this.state.evolution.setCellState(cell) });
+  //   };
+  // };
 
   renderGrid = () => {
     var grid = []
@@ -28,9 +28,9 @@ class Grid extends Component {
     for (let i = 0; i < this.state.size[0]; i++) {
       for (let j = 0; j < this.state.size[1]; j++) {
         if (this.state.evolution.isAlive(`${i}, ${j}`)) {
-          row.push(<Cell key={[i, j]} position={{ x: i, y: j }} live={true} setState={this.setCellState(this)} />);
+          row.push(<Cell key={[i, j]} position={{ x: i, y: j }} live={true} />);
         } else {
-          row.push(<Cell key={[i, j]} position={{ x: i, y: j }} live={false} setState={this.setCellState(this)} />);
+          row.push(<Cell key={[i, j]} position={{ x: i, y: j }} live={false} />);
         };
       };
   
@@ -69,16 +69,22 @@ class Grid extends Component {
 
   startGame = () => {
     if (!this.state.running) {
-      this.setState({ running: true });
+      this.setState({ running: true }, () => {
+        this.intervalRef = setInterval(() => this.run(), this.state.interval);
+      });
     };
   };
 
   stopGame = () => {
-    this.setState({ running: false });
+    this.setState({ running: false }, () => {
+      if (this.intervalRef) {
+        clearInterval(this.intervalRef);
+      };
+    });
   };
 
   clearGrid = () => {
-    console.log('Cleared')
+    console.log('Cleared');
   };
 
   advanceGeneration = () => {
@@ -86,7 +92,7 @@ class Grid extends Component {
   };
 
   run = () => {
-    this.setState({ evolution: this.state.evolution.addGeneration() });
+    this.setState({ evolution: this.state.evolution.newGeneration() });
   };
 
   render() {

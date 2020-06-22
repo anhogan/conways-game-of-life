@@ -20,15 +20,15 @@ class Evolution extends Component {
     return this.state.liveCells.has(key);
   };
 
-  setCellState = (cell) => {
-    if (this.isAlive(`${cell.x}, ${cell.y}`)) {
-      this.removeCell(`${cell.x}, ${cell.y}`);
-    } else {
-      this.addCell(`${cell.x}, ${cell.y}`);
-    };
+  // setCellState = (cell) => {
+  //   if (this.isAlive(`${cell.x}, ${cell.y}`)) {
+  //     this.removeCell(`${cell.x}, ${cell.y}`);
+  //   } else {
+  //     this.addCell(`${cell.x}, ${cell.y}`);
+  //   };
 
-    return new Evolution(0, this.state.liveCells);
-  };
+  //   return new Evolution(0, this.state.liveCells);
+  // };
 
   // TODO: condense into one function
   calculateLiveNeighbors = (cell) => {
