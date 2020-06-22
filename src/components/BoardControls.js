@@ -1,17 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { startGame, stopGame, clearGrid } from '../actions/index';
+import React, { Component } from 'react';
 
-const BoardControls = (props) => {
-  return (
-    <div>
+class BoardControls extends Component {
+  render() {
+    return (
       <div>
-        <button onClick={props.startGame()}>Start</button>
-        <button onClick={props.stopGame()}>Stop</button>
-        <button onClick={props.clearGrid()}>Clear</button>
+        <div>
+          <button onClick={this.props.startGame}>Start</button>
+          <button onClick={this.props.stopGame}>Stop</button>
+          <button onClick={this.props.clearGrid}>Clear</button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 };
 
-export default connect(null, { startGame, stopGame, clearGrid })(BoardControls);
+export default BoardControls;

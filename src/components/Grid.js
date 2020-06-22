@@ -1,19 +1,37 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { CHANGE_COLUMNS, CHANGE_ROWS, CHANGE_INTERVAL } from '../actions/index';
+import React, { Component } from 'react';
 
 import Cell from './Cell';
+import BoardControls from './BoardControls';
+import Evolution from './Evolution';
 
 import { RowDiv, GridDiv } from './Styles';
 
-const Grid = (props) => {
-  const renderGrid = () => {
+class Grid extends Component {
+  state = {
+    size: [25, 25],
+    running: false,
+    interval: 50,
+    generation: 0,
+    evolution: new Evolution()
+  };
+
+  setCellState = (cell) => {
+    if (!this.state.running) {
+      this.setState({ evolution: this.state.evolution.setCellState(cell) });
+    };
+  };
+
+  renderGrid = () => {
     var grid = []
     var row = []
   
-    for (let i = 0; i < props.size[0]; i++) {
-      for (let j = 0; j < props.size[1]; j++) {
-        row.push(<Cell key={[i, j]} />)
+    for (let i = 0; i < this.state.size[0]; i++) {
+      for (let j = 0; j < this.state.size[1]; j++) {
+        if (this.state.evolution.isAlive(`${i}, ${j}`)) {
+          row.push(<Cell key={[i, j]} position={{ x: i, y: j }} live={true} setState={this.setCellState(this)} />);
+        } else {
+          row.push(<Cell key={[i, j]} position={{ x: i, y: j }} live={false} setState={this.setCellState(this)} />);
+        };
       };
   
       grid.push(<RowDiv key={i}>{row}</RowDiv>)
@@ -23,72 +41,89 @@ const Grid = (props) => {
     return grid;
   };
   
-  const handleColumnChange = (e) => (dispatch) => {
-    if (!props.running) {
-      var size = props.size;
+  handleColumnChange = (e) => {
+    if (!this.state.running) {
+      var size = this.state.size;
       size[0] = e.target.value;
   
-      dispatch({ type: CHANGE_COLUMNS, payload: size });
+      this.setState({ size: size });
   
-      renderGrid();
+      this.renderGrid();
     };
   };
   
-  const handleRowChange = (e) => (dispatch) => {
-    if (!props.running) {
-      var size = props.size;
+  handleRowChange = (e) => {
+    if (!this.state.running) {
+      var size = this.state.size;
       size[1] = e.target.value;
   
-      dispatch({ type: CHANGE_ROWS, payload: size });
+      this.setState({ size: size });
   
-      renderGrid();
+      this.renderGrid();
     };
   };
 
-  const handleIntervalChange = (e) => (dispatch) => {
-    var speed = e.target.value
-    dispatch({ type: CHANGE_INTERVAL, payload: speed });
+  handleIntervalChange = (e) => {
+    this.setState({ interval: e.target.value });
   };
 
-  return (
-    <div>
-      <h4>Generation: </h4>
-      <GridDiv>
-        {renderGrid()}
-      </GridDiv>
+  startGame = () => {
+    if (!this.state.running) {
+      this.setState({ running: true });
+    };
+  };
+
+  stopGame = () => {
+    this.setState({ running: false });
+  };
+
+  clearGrid = () => {
+    console.log('Cleared')
+  };
+
+  advanceGeneration = () => {
+    this.setState({ generation: this.state.generation + 1 });
+  };
+
+  run = () => {
+    this.setState({ evolution: this.state.evolution.addGeneration() });
+  };
+
+  render() {
+    return (
       <div>
+        <h4>Generation: {this.state.generation}</h4>
+        <GridDiv>
+          {this.renderGrid()}
+        </GridDiv>
         <div>
-          <label>Columns</label>
-          <input
-            type="text"
-            value={props.size[0]}
-            onChange={handleColumnChange()} />
+          <div>
+            <label>Columns</label>
+            <input
+              type="text"
+              value={this.state.size[0]}
+              onChange={this.handleColumnChange} />
+          </div>
+          <div>
+            <label>Rows</label>
+            <input
+              type="text"
+              value={this.state.size[1]}
+              onChange={this.handleRowChange} />
+          </div>
+          <div>
+            <label>Animation Speed</label>
+            <input
+              type="text"
+              value={this.state.interval}
+              onChange={this.handleIntervalChange} />
+          </div>
         </div>
-        <div>
-          <label>Rows</label>
-          <input
-            type="text"
-            value={props.size[1]}
-            onChange={handleRowChange()} />
-        </div>
-        <div>
-          <label>Animation Speed</label>
-          <input
-            type="text"
-            value={props.interval}
-            onChange={handleIntervalChange()} />
-        </div>
+        <BoardControls startGame={this.startGame} stopGame={this.stopGame} clearGrid={this.clearGrid} />
+        <Evolution generation={this.state.generation} advanceGeneration={this.advanceGeneration} />
       </div>
-    </div>
-  );
+    );
+  };
 };
 
-const mapStateToProps = state => {
-  return {
-    size: state.size,
-    running: state.running,
-    interval: state.interval
-  }
-};
-
-export default connect(mapStateToProps, {})(Grid);
+export default Grid;

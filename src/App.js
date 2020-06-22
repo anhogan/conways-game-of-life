@@ -1,16 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
 
 import GameBoard from './components/GameBoard';
 
 import './App.css';
 
-const App = () => {
-  return (
-    <div className="App">
-      <GameBoard />
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <GameBoard />
+      </div>
+    );
+  };
 };
 
-export default connect(null, {})(App);
+export default App;
