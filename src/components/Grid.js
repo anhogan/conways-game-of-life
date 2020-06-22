@@ -21,6 +21,24 @@ class Grid extends Component {
     return grid;
   };
 
+  handleColumnChange = (e) => {
+    if (!this.props.running) {
+      var size = this.props.size;
+      size[0] = e.target.value;
+      this.setState({ size: size });
+      this.renderGrid();
+    };
+  };
+
+  handleRowChange = (e) => {
+    if (!this.props.running) {
+      var size = this.props.size;
+      size[1] = e.target.value;
+      this.setState({ size: size });
+      this.renderGrid();
+    };
+  };
+
   render() {
     return (
       <div>
@@ -28,6 +46,22 @@ class Grid extends Component {
         <GridDiv>
           {this.renderGrid()}
         </GridDiv>
+        <div>
+          <div>
+            <label>Columns</label>
+            <input
+              type="text"
+              value={this.props.size[0]}
+              onChange={this.handleColumnChange} />
+          </div>
+          <div>
+            <label>Rows</label>
+            <input
+              type="text"
+              value={this.props.size[1]}
+              onChange={this.handleRowChange} />
+          </div>
+        </div>
       </div>
     );
   };

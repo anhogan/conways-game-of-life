@@ -9,7 +9,8 @@ import { RulesButton } from './Styles';
 class GameBoard extends Component {
   state = {
     open: false,
-    size: [25, 25]
+    size: [25, 25],
+    running: false
   };
 
   openModal = () => {
@@ -25,7 +26,7 @@ class GameBoard extends Component {
       <div>
         <h1>Conway's Game of Life</h1>
         <RulesButton onClick={this.openModal}>Rules</RulesButton>
-        <Grid size={this.state.size} />
+        <Grid size={this.state.size} running={this.state.running} />
         <BoardControls size={this.state.size} />
         <Rules open={this.state.open} closeModal={this.closeModal} />
       </div>

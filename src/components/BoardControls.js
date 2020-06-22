@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 
 class BoardControls extends Component {
-  handleColumnChange = (e) => {
-
-  };
-
-  handleRowChange = (e) => {
-    
-  };
-
   startGame = () => {
 
   };
@@ -35,22 +27,6 @@ class BoardControls extends Component {
         </div>
         <div>
           <button onClick={this.randomConfig}>Random</button>
-        </div>
-        <div>
-          <div>
-            <label>Columns</label>
-            <input
-              type="text"
-              value={this.props.size[0]}
-              onChange={this.handleColumnChange} />
-          </div>
-          <div>
-            <label>Rows</label>
-            <input
-              type="text"
-              value={this.props.size[1]}
-              onChange={this.handleRowChange} />
-          </div>
         </div>
       </div>
     );
