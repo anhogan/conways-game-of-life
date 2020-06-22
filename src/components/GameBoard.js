@@ -5,6 +5,8 @@ import Grid from './Grid';
 import BoardControls from './BoardControls';
 import Rules from './Rules';
 
+import { RulesButton } from './Styles';
+
 class GameBoard extends Component {
   state = {
     open: false
@@ -22,7 +24,7 @@ class GameBoard extends Component {
     return (
       <div>
         <h1>Conway's Game of Life</h1>
-        <button onClick={this.openModal}>Rules</button>
+        <RulesButton onClick={this.openModal}>Rules</RulesButton>
         <Grid />
         <BoardControls />
         <Rules open={this.state.open} closeModal={this.closeModal} />
