@@ -19,7 +19,6 @@ export const RulesButton = styled.button`
 
 export const ModalDiv = styled.div`
   width: 500px;
-  margin-top: 150px;
   background: white;
   border: 1px solid #ccc;
   transition: 1.1s ease-out;

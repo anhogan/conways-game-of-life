@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import { ModalDiv } from './Styles';
 
@@ -34,4 +33,4 @@ class Rules extends Component {
   }
 }
 
-export default connect(null, {})(Rules);
+export default Rules;

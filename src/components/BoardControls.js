@@ -1,21 +1,60 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 class BoardControls extends Component {
+  handleColumnChange = (e) => {
+
+  }
+
+  handleRowChange = (e) => {
+    
+  }
+
+  startGame = () => {
+
+  }
+
+  stopGame = () => {
+
+  }
+
+  clearGrid = () => {
+
+  }
+
+  randomConfig = () => {
+
+  }
+
   render() {
     return (
       <div>
         <div>
-          <button>Start</button>
-          <button>Stop</button>
-          <button>Clear</button>
+          <button onClick={this.startGame}>Start</button>
+          <button onClick={this.stopGame}>Stop</button>
+          <button onClick={this.clearGrid}>Clear</button>
         </div>
         <div>
-          <button>Random</button>
+          <button onClick={this.randomConfig}>Random</button>
+        </div>
+        <div>
+          <div>
+            <label>Columns</label>
+            <input
+              type="text"
+              value={this.props.size[0]}
+              onChange={this.handleColumnChange} />
+          </div>
+          <div>
+            <label>Rows</label>
+            <input
+              type="text"
+              value={this.props.size[1]}
+              onChange={this.handleRowChange} />
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default connect(null, {})(BoardControls);
+export default BoardControls;
