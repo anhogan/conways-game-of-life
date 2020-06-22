@@ -81,3 +81,37 @@ export const GridDiv = styled.div`
   width: 50px;
   margin: 0 auto;
 `;
+
+export const InputContainer = styled.div`
+  width: 150%;
+  margin-left: -25%;
+  display: flex;
+  justify-content: center;
+`;
+
+export const InputDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 20%;
+  margin: 1% 0;
+`;
+
+export const Inputs = styled.input`
+  font-size: 1.2rem;
+  border-radius: 5px;
+  color: midnightblue;
+  border: 1px solid mediumspringgreen;
+  padding: 1%;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  &:focus {
+    outline: none
+  }
+`;
+
+export const Labels = styled.label`
+  font-size: 1.2rem;
+  color: midnightblue;
+`;

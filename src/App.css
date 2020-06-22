@@ -12,3 +12,11 @@ body {
   justify-content: center;
   align-items: flex-start;
 }
+
+.cellAlive {
+  background: white;
+}
+
+.cellDead {
+  background: midnightblue;
+}
