@@ -1,36 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { startGame, stopGame, clearGrid } from '../actions/index';
 
-class BoardControls extends Component {
-  startGame = () => {
-
-  };
-
-  stopGame = () => {
-
-  };
-
-  clearGrid = () => {
-
-  };
-
-  randomConfig = () => {
-
-  };
-
-  render() {
-    return (
+const BoardControls = (props) => {
+  return (
+    <div>
       <div>
-        <div>
-          <button onClick={this.startGame}>Start</button>
-          <button onClick={this.stopGame}>Stop</button>
-          <button onClick={this.clearGrid}>Clear</button>
-        </div>
-        <div>
-          <button onClick={this.randomConfig}>Random</button>
-        </div>
+        <button onClick={props.startGame()}>Start</button>
+        <button onClick={props.stopGame()}>Stop</button>
+        <button onClick={props.clearGrid()}>Clear</button>
       </div>
-    );
-  };
+    </div>
+  );
 };
 
-export default BoardControls;
+export default connect(null, { startGame, stopGame, clearGrid })(BoardControls);

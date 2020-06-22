@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 
 import { CellDiv } from './Styles';
 
-class Cell extends Component {
-  render() {
-    return (
-      <CellDiv></CellDiv>
-    );
-  };
+const Cell = () => {
+  return (
+    <CellDiv></CellDiv>
+  );
 };
 
-export default Cell;
+export default connect(null, {})(Cell);
