@@ -3,27 +3,27 @@ import React, { Component } from 'react';
 class BoardControls extends Component {
   handleColumnChange = (e) => {
 
-  }
+  };
 
   handleRowChange = (e) => {
     
-  }
+  };
 
   startGame = () => {
 
-  }
+  };
 
   stopGame = () => {
 
-  }
+  };
 
   clearGrid = () => {
 
-  }
+  };
 
   randomConfig = () => {
 
-  }
+  };
 
   render() {
     return (
@@ -54,7 +54,7 @@ class BoardControls extends Component {
         </div>
       </div>
     );
-  }
-}
+  };
+};
 
 export default BoardControls;

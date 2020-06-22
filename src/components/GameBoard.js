@@ -10,15 +10,15 @@ class GameBoard extends Component {
   state = {
     open: false,
     size: [25, 25]
-  }
+  };
 
   openModal = () => {
-    this.setState({ open: true })
-  }
+    this.setState({ open: true });
+  };
 
   closeModal = () => {
-    this.setState({ open: false })
-  }
+    this.setState({ open: false });
+  };
 
   render() {
     return (
@@ -30,7 +30,7 @@ class GameBoard extends Component {
         <Rules open={this.state.open} closeModal={this.closeModal} />
       </div>
     );
-  }
-}
+  };
+};
 
 export default GameBoard;

@@ -30,7 +30,7 @@ class Rules extends Component {
         </div>
       </ModalDiv>
     );
-  }
-}
+  };
+};
 
 export default Rules;
