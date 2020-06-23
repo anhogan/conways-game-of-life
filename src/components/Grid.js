@@ -156,28 +156,6 @@ class Grid extends Component {
 
     this.setState({ cellGrid: this.renderCells() });
   };
-  
-  // handleColumnChange = (e) => {
-  //   if (!this.state.running) {
-  //     var size = this.state.size;
-  //     size[0] = e.target.value;
-  
-  //     this.setState({ size: size });
-  
-  //     this.renderGrid();
-  //   };
-  // };
-  
-  // handleRowChange = (e) => {
-  //   if (!this.state.running) {
-  //     var size = this.state.size;
-  //     size[1] = e.target.value;
-  
-  //     this.setState({ size: size });
-  
-  //     this.renderGrid();
-  //   };
-  // };
 
   handleIntervalChange = (e) => {
     this.setState({ interval: e.target.value });
@@ -204,20 +182,6 @@ class Grid extends Component {
           <ActionColumnDiv>
             <GenerationText>Generation: {this.state.generation}</GenerationText>
             <InputContainer>
-              {/* <InputDiv>
-                <Labels>Columns</Labels>
-                <Inputs
-                  type="text"
-                  value={this.state.size[0]}
-                  onChange={this.handleColumnChange} />
-              </InputDiv>
-              <InputDiv>
-                <Labels>Rows</Labels>
-                <Inputs
-                  type="text"
-                  value={this.state.size[1]}
-                  onChange={this.handleRowChange} />
-              </InputDiv> */}
               <InputDiv>
                 <Labels>Animation Speed</Labels>
                 <Inputs
