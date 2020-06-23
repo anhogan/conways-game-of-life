@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Header = styled.h1`
   margin-bottom: .5%;
+  color: midnightblue
 `;
 
 export const RulesButton = styled.button`

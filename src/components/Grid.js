@@ -20,6 +20,7 @@ class Grid extends Component {
   state = {
     cellGrid: [],
     running: false,
+    size: cellSize,
     interval: 1000,
     generation: 0
   };
@@ -27,10 +28,20 @@ class Grid extends Component {
   // Clear the grid of all active cells
   renderEmptyGrid = () => {
     var grid = [];
+    var rows;
+    var columns;
 
-    for (let y = 0; y < this.rows; y++) {
+    if (this.state.size !== cellSize) {
+      rows = gridHeight / this.state.size;
+      columns = gridWidth / this.state.size;
+    } else {
+      rows = this.rows;
+      columns = this.columns;
+    };
+
+    for (let y = 0; y < rows; y++) {
       grid[y] = [];
-      for (let x = 0; x < this.columns; x++) {
+      for (let x = 0; x < columns; x++) {
         grid[y][x] = false;
       };
     };
@@ -41,9 +52,19 @@ class Grid extends Component {
   // Create cells and add them to the grid at specified coordinates
   renderCells = () => {
     var cells = [];
+    var rows;
+    var columns;
+
+    if (this.state.size !== cellSize) {
+      rows = gridHeight / this.state.size;
+      columns = gridWidth / this.state.size;
+    } else {
+      rows = this.rows;
+      columns = this.columns;
+    };
     
-    for (let y = 0; y < this.rows; y++) {
-      for (let x = 0; x < this.columns; x++) {
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < columns; x++) {
         if (this.grid[y][x]) {
           cells.push({ x, y });
         };
@@ -66,6 +87,17 @@ class Grid extends Component {
 
   // If cell is clicked, toggle its state
   toggleCellState = (e) => {
+    var rows;
+    var columns;
+
+    if (this.state.size !== cellSize) {
+      rows = gridHeight / this.state.size;
+      columns = gridWidth / this.state.size;
+    } else {
+      rows = this.rows;
+      columns = this.columns;
+    };
+    
     if (!this.state.running) {
       var offset = this.getOffset();
       var offsetX = e.clientX - offset.x - 1;
@@ -75,7 +107,7 @@ class Grid extends Component {
       var y = Math.floor(offsetY / cellSize);
   
       // Toggle state if cell is within grid
-      if (x >= 0 && x < this.columns && y >= 0 && y <= this.rows) {
+      if (x >= 0 && x < columns && y >= 0 && y <= rows) {
         this.grid[y][x] = !this.grid[y][x];
       };
   
@@ -85,16 +117,20 @@ class Grid extends Component {
   };
 
   // For each cell, check neighbor state to determine if it lives or dies
-  /**
-   * Calcuate the state of each neighbor cell
-   * @param {Array} grid 
-   * @param {int} x 
-   * @param {int} y 
-   */
   calculateNeighbors = (grid, x, y) => {
     var liveNeighbors = 0;
     // Possible surrounding cell combinations - excludes current cell
     var surrounding = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
+    var rows;
+    var columns;
+
+    if (this.state.size !== cellSize) {
+      rows = gridHeight / this.state.size;
+      columns = gridWidth / this.state.size;
+    } else {
+      rows = this.rows;
+      columns = this.columns;
+    };
 
     for (let i = 0; i < surrounding.length; i++) {
       var checkSurrounding = surrounding[i];
@@ -102,7 +138,7 @@ class Grid extends Component {
       var x1 = x + checkSurrounding[1];
 
       // If valid cell and grid at the neighbor cell is alive, add one to neighbors
-      if (x1 >= 0 && x1 < this.columns && y1 >= 0 && y1 < this.rows && grid[y1][x1]) {
+      if (x1 >= 0 && x1 < columns && y1 >= 0 && y1 < rows && grid[y1][x1]) {
         liveNeighbors++;
       };
     };
@@ -113,10 +149,20 @@ class Grid extends Component {
   runGame = () => {
     // Start with an empty grid to calculate next state
     var newGrid = this.renderEmptyGrid();
+    var rows;
+    var columns;
+
+    if (this.state.size !== cellSize) {
+      rows = gridHeight / this.state.size;
+      columns = gridWidth / this.state.size;
+    } else {
+      rows = this.rows;
+      columns = this.columns;
+    };
 
     // Loop through 2D array to check each cell
-    for (let y = 0; y < this.rows; y++) {
-      for (let x = 0; x < this.columns; x++) {
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < columns; x++) {
         var neighbors = this.calculateNeighbors(this.grid, x, y);
 
         // If cell is live, check if 2, or 3, neighbors are also live
@@ -164,7 +210,7 @@ class Grid extends Component {
     }
   };
 
-  // Set all cell states to dead
+  // Set all cell states to dead and generation to 0
   clearGrid = () => {
     this.grid = this.renderEmptyGrid();
     this.setState({ cellGrid: this.renderCells() });
@@ -173,13 +219,31 @@ class Grid extends Component {
 
   randomConfig = () => {
     if (!this.state.running) {
-      for (let y = 0; y < this.rows; y++) {
-        for (let x = 0; x < this.columns; x++) {
+      var rows;
+      var columns;
+  
+      if (this.state.size !== cellSize) {
+        rows = gridHeight / this.state.size;
+        columns = gridWidth / this.state.size;
+      } else {
+        rows = this.rows;
+        columns = this.columns;
+      };
+
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
           this.grid[y][x] = (Math.random() >= 0.5);
         };
       };
   
       this.setState({ cellGrid: this.renderCells() });
+    };
+  };
+
+  handleCellSizeChange = (e) => {
+    if (!this.state.running) {
+      this.setState({ size: e.target.value });
+      this.renderEmptyGrid();
     };
   };
 
@@ -210,6 +274,13 @@ class Grid extends Component {
           <ActionColumnDiv>
             <GenerationText>Generation: {this.state.generation}</GenerationText>
             <InputContainer>
+              <InputDiv>
+                <Labels>Cell Size</Labels>
+                <Inputs
+                  type="text"
+                  value={this.state.size}
+                  onChange={this.handleCellSizeChange} />
+              </InputDiv>
               <InputDiv>
                 <Labels>Animation Speed</Labels>
                 <Inputs
