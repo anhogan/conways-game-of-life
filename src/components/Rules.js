@@ -22,8 +22,8 @@ class Rules extends Component {
             <li>Any dead cell with three live neighbors becomes a live cell</li>
             <li>Any live cell with less than two live neighbors, or more than three live neighbors, dies</li>
           </ul>
-          <p>To play, create an initial pattern on the grid, then click <strong>Start</strong> to watch the life cycle evolve. Alternatively, choose from a predefined configuration.</p>
-          <p>Use the speed boxes to determine how fast, or slow, the animation will play. To see a configuration at a certain generation, hit the <strong>Stop</strong> button. Use the <strong>Clear</strong> button to restart.</p>
+          <p>To play, create an initial pattern on the grid, or click <strong>Random</strong> to generate a random configuration of cells. Click <strong>Start</strong> to watch the life cycle evolve.</p>
+          <p>Use the animation speed box to determine how fast, or slow, the animation will play. All times are in milliseconds. To see a configuration at a certain generation, hit the <strong>Stop</strong> button. Use the <strong>Clear</strong> button to restart.</p>
         </div>
         <div className="playBtn">
           <button onClick={this.closeModal}>Play</button>

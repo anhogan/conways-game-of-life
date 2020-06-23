@@ -24,6 +24,7 @@ export const RulesButton = styled.button`
 export const ModalDiv = styled.div`
   width: 500px;
   margin-top: -650px;
+  margin-left: 32.5%;
   background: white;
   border: 1px solid #ccc;
   transition: 1.1s ease-out;
@@ -34,7 +35,6 @@ export const ModalDiv = styled.div`
   visibility: visible;
   @supports (offset-rotate: 0deg) {
     offset-rotate: 0deg;
-    offset-path: path("M 250,100 S -300,500 -700,-200");
   }
   h2 {
     border-bottom: 1px solid #ccc;
