@@ -1,32 +1,19 @@
 import React, { Component } from 'react';
 
-import { CellDivLive, CellDivDead } from './Styles';
+import { cellSize } from '../config/grid_variables';
 
-// TODO: set state on the cell itself for alive and dead, then loop through each row and check for live = true?
-// Move to parent component
+import { CellDiv } from './Styles';
+
 class Cell extends Component {
-  state = {
-    live: false
-  };
-
-  toggleState = () => {
-    if (this.state.live) {
-      this.setState({ live: false });
-    } else {
-      this.setState({ live: true });
-    };
-  };
-
   render() {
-    if (this.state.live) {
-      return (
-        <CellDivLive onClick={this.toggleState}></CellDivLive>
-      );
-    } else {
-      return (
-        <CellDivDead onClick={this.toggleState}></CellDivDead>
-      );
-    }
+    return (
+      <CellDiv style={{
+        left: `${cellSize * this.props.x + 1}px`,
+        top: `${cellSize * this.props.y + 1}px`,
+        width: `${cellSize - 1}px`,
+        height: `${cellSize - 1}px`,
+      }}></CellDiv>
+    );
   };
 };
 

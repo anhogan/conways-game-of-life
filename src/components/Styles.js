@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const Header = styled.h1`
+  margin-bottom: .5%;
+`;
+
 export const RulesButton = styled.button`
   border: 0;
   background: mediumspringgreen;
@@ -60,41 +64,40 @@ export const ModalDiv = styled.div`
   }
 `;
 
-export const CellDivLive = styled.div`
-  width: 1px;
+export const ContentContainerDiv = styled.div`
   display: flex;
-  flex: 1;
-  padding: 10px;
-  margin: 1px;
-  border: 1px solid mediumspringgreen;
+  margin-top: -2%;
+`;
+
+export const GridColumnDiv = styled.div`
+  width: 58%;
+  margin: 3% 1%;
+`;
+
+export const ActionColumnDiv = styled.div`
+  width: 38%;
+  margin: 1%;
+  padding: 5% 1%;
+`;
+
+export const CellDiv = styled.div`
+  position: absolute;  
   background: white;
 `;
 
-export const CellDivDead = styled.div`
-  width: 1px;
-  display: flex;
-  flex: 1;
-  padding: 10px;
-  margin: 1px;
-  border: 1px solid mediumspringgreen;
-  background: midnightblue;
-`;
-
-export const RowDiv = styled.div`
-  display: flex;
-`;
-
 export const GridDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 50px;
+  position: relative;
   margin: 0 auto;
+  background: midnightblue;
+  background-image: linear-gradient(mediumspringgreen 1px, transparent 1px),    linear-gradient(90deg, mediumspringgreen 1px, transparent 1px);
+`;
+
+export const GenerationText = styled.h4`
+  font-size: 1.2rem;
+  color: midnightblue;
 `;
 
 export const InputContainer = styled.div`
-  width: 150%;
-  margin-left: -25%;
   display: flex;
   justify-content: center;
 `;
@@ -103,7 +106,6 @@ export const InputDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 20%;
   margin: 1% 0;
 `;
 
@@ -128,19 +130,19 @@ export const Labels = styled.label`
 
 export const ButtonDiv = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  width: 150%;
-  margin-left: -25%;
 `;
 
 export const UserButtons = styled.button`
+  width: 25%;
   border: 0;
   background: mediumspringgreen;
   border-radius: 5px;
   padding: 0.5rem 1rem;
   font-size: 0.8rem;
   line-height: 1;
-  margin: 1% 7%;
+  margin: 1% auto;
   &:hover {
     cursor: pointer;
     background: midnightblue;

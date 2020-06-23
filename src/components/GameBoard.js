@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Grid from './Grid';
 import Rules from './Rules';
 
-import { RulesButton } from './Styles';
+import { Header, RulesButton } from './Styles';
 
 class GameBoard extends Component {
   state = {
@@ -21,7 +21,7 @@ class GameBoard extends Component {
   render() {
     return (
       <div>
-        <h1>Conway's Game of Life</h1>
+        <Header>Conway's Game of Life</Header>
         <RulesButton onClick={this.openModal}>Rules</RulesButton>
         <Grid />
         <Rules open={this.state.open} closeModal={this.closeModal} />
