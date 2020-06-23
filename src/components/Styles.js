@@ -60,7 +60,17 @@ export const ModalDiv = styled.div`
   }
 `;
 
-export const CellDiv = styled.div`
+export const CellDivLive = styled.div`
+  width: 1px;
+  display: flex;
+  flex: 1;
+  padding: 10px;
+  margin: 1px;
+  border: 1px solid mediumspringgreen;
+  background: white;
+`;
+
+export const CellDivDead = styled.div`
   width: 1px;
   display: flex;
   flex: 1;

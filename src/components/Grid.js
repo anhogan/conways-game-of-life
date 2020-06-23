@@ -6,6 +6,7 @@ import Evolution from './Evolution';
 
 import { RowDiv, GridDiv, InputContainer, InputDiv, Inputs, Labels } from './Styles';
 
+// TODO: add constructor to createRef
 class Grid extends Component {
   state = {
     size: [25, 25],
@@ -14,12 +15,6 @@ class Grid extends Component {
     generation: 0,
     evolution: new Evolution()
   };
-
-  // setCellState = (cell) => {
-  //   if (!this.state.running) {
-  //     this.setState({ evolution: this.state.evolution.setCellState(cell) });
-  //   };
-  // };
 
   renderGrid = () => {
     var grid = []
@@ -83,8 +78,8 @@ class Grid extends Component {
     });
   };
 
+  // TODO: Turn all cell states to dead
   clearGrid = () => {
-    // Turn all cells to dead - condense functions first for easier rendering
     console.log('Cleared');
   };
 
@@ -92,6 +87,7 @@ class Grid extends Component {
     this.setState({ generation: this.state.generation + 1 });
   };
 
+  // TODO: make the game run
   run = () => {
     this.setState({ evolution: this.state.evolution.newGeneration() });
   };

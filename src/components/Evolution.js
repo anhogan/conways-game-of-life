@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+// TODO: fix no render error and add a constructor for passing data
 class Evolution extends Component {
   // TODO: condense into one Map of cells with a state to manage alive / dead
   state = {
@@ -8,29 +9,12 @@ class Evolution extends Component {
     nextGeneration: new Map()
   };
 
-  addCell = (cell) => {
-    this.state.liveCells.set(`${cell.x}, ${cell.y}`, { x: cell.x, y: cell.y });
-  };
-
-  removeCell = (cell) => {
-    this.state.liveCells.delete(cell);
-  };
-
+  // TODO: find from cell state and return if live is true > remove this
   isAlive = (key) => {
     return this.state.liveCells.has(key);
   };
 
-  // setCellState = (cell) => {
-  //   if (this.isAlive(`${cell.x}, ${cell.y}`)) {
-  //     this.removeCell(`${cell.x}, ${cell.y}`);
-  //   } else {
-  //     this.addCell(`${cell.x}, ${cell.y}`);
-  //   };
-
-  //   return new Evolution(0, this.state.liveCells);
-  // };
-
-  // TODO: condense into one function
+  // TODO: condense into one function with calculateDeadNeighbors
   calculateLiveNeighbors = (cell) => {
     var numAlive = 0;
 
@@ -93,12 +77,10 @@ class Evolution extends Component {
   };
 
   render() {
-    return(
-      <div>
-
-      </div>
+    return (
+      <></>
     )
-  }
+  };
 };
 
 export default Evolution;
