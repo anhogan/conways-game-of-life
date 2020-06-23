@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { cellSize } from '../config/grid_variables';
+// import { cellSize } from '../config/grid_variables';
 
 import { CellDiv } from './Styles';
 
@@ -9,10 +9,10 @@ class Cell extends Component {
     return (
       // Style how the cell appears within the grid
       <CellDiv style={{
-        left: `${cellSize * this.props.x + 1}px`,
-        top: `${cellSize * this.props.y + 1}px`,
-        width: `${cellSize - 1}px`,
-        height: `${cellSize - 1}px`,
+        left: `${this.props.cellSize * this.props.x + 1}px`,
+        top: `${this.props.cellSize * this.props.y + 1}px`,
+        width: `${this.props.cellSize - 1}px`,
+        height: `${this.props.cellSize - 1}px`,
       }}></CellDiv>
     );
   };
