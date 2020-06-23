@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import { gridWidth, gridHeight } from '../config/grid_variables';
 
 import Cell from './Cell';
+import InputBoxes from './InputBoxes';
 import BoardControls from './BoardControls';
 
-import { ContentContainerDiv, GridColumnDiv, ActionColumnDiv, GridDiv, GenerationText, InputContainer, InputDiv, Inputs, Labels } from './Styles';
+import { ContentContainerDiv, GridColumnDiv, ActionColumnDiv, GridDiv, GenerationText, InputContainer } from './Styles';
 
 class Grid extends Component {
   // Specify how many rows and columns will be appear on the grid
@@ -19,8 +20,8 @@ class Grid extends Component {
 
   state = {
     cellGrid: [],
-    running: false,
     cellSize: 24,
+    running: false,
     interval: 1000,
     generation: 0
   };
@@ -31,7 +32,7 @@ class Grid extends Component {
 
     for (let y = 0; y < this.rows; y++) {
       grid[y] = [];
-      for (let x = 0; x < this.columns; x++) {
+      for (let x = 0; x < this.state.columns; x++) {
         grid[y][x] = false;
       };
     };
@@ -76,7 +77,7 @@ class Grid extends Component {
       var y = Math.floor(offsetY / this.state.cellSize);
   
       // Toggle state if cell is within grid
-      if (x >= 0 && x < this.columns && y >= 0 && y <= this.rows) {
+      if (x >= 0 && x < this.columns && y >= 0 && y < this.rows) {
         this.grid[y][x] = !this.grid[y][x];
       };
   
@@ -89,14 +90,14 @@ class Grid extends Component {
   calculateNeighbors = (grid, x, y) => {
     var liveNeighbors = 0;
     // Possible surrounding cell combinations - excludes current cell
-    var surrounding = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
+    var options = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
 
-    for (let i = 0; i < surrounding.length; i++) {
-      var checkSurrounding = surrounding[i];
-      var y1 = y + checkSurrounding[0];
-      var x1 = x + checkSurrounding[1];
+    for (let i = 0; i < options.length; i++) {
+      var checkOptions = options[i];
+      var y1 = y + checkOptions[0];
+      var x1 = x + checkOptions[1];
 
-      // If valid cell and grid at the neighbor cell is alive, add one to neighbors
+      // If valid cell and grid at the neighbor cell is live, add one to neighbors
       if (x1 >= 0 && x1 < this.columns && y1 >= 0 && y1 < this.rows && grid[y1][x1]) {
         liveNeighbors++;
       };
@@ -132,30 +133,27 @@ class Grid extends Component {
 
     // Set current state to new state
     this.grid = newGrid;
+
     // Re-render cells based on updated state
     this.setState({ cellGrid: this.renderCells() });
     this.setState({ generation: this.state.generation + 1 });
-
-    // Set animation speed based on interval state
-    this.intervalTimeout = window.setTimeout(() => {
-      this.runGame();
-    }, this.state.interval);
   };
 
   // Invoke the run game function
   startGame = () => {
     if (!this.state.running) {
-      this.setState({ running: true });
-      this.runGame();
+      this.setState({ running: true }, () => {
+        this.intervalTimeout = setInterval(() => this.runGame(), this.state.interval)
+      });
     };
   };
 
   stopGame = () => {
-    this.setState({ running: false });
-    if (this.intervalTimeout) {
-      window.clearTimeout(this.intervalTimeout);
-      this.intervalTimeout = null;
-    }
+    this.setState({ running: false }, () => {
+      if (this.intervalTimeout) {
+        clearInterval(this.intervalTimeout)
+      }
+    });
   };
 
   // Set all cell states to dead and generation to 0
@@ -210,20 +208,7 @@ class Grid extends Component {
           <ActionColumnDiv>
             <GenerationText>Generation: {this.state.generation}</GenerationText>
             <InputContainer>
-              <InputDiv>
-                <Labels>Cell Size</Labels>
-                <Inputs
-                  type="text"
-                  value={this.state.cellSize}
-                  onChange={this.handleCellSizeChange} />
-              </InputDiv>
-              <InputDiv>
-                <Labels>Animation Speed</Labels>
-                <Inputs
-                  type="text"
-                  value={this.state.interval}
-                  onChange={this.handleIntervalChange} />
-              </InputDiv>
+              <InputBoxes cellSize={this.state.cellSize} interval={this.state.interval} handleCellSizeChange={this.handleCellSizeChange} handleIntervalChange={this.handleIntervalChange} />
             </InputContainer>
             <BoardControls startGame={this.startGame} stopGame={this.stopGame} clearGrid={this.clearGrid} randomConfig={this.randomConfig} />
           </ActionColumnDiv>
