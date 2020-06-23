@@ -102,7 +102,7 @@ class Grid extends Component {
       var x1 = x + checkSurrounding[1];
 
       // If valid cell and grid at the neighbor cell is alive, add one to neighbors
-      if (x1 >= 0 && x1 <= this.columns && y1 >= 0 && y1 <= this.rows && grid[y1][x1]) {
+      if (x1 >= 0 && x1 < this.columns && y1 >= 0 && y1 < this.rows && grid[y1][x1]) {
         liveNeighbors++;
       };
     };
