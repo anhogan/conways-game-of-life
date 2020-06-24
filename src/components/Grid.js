@@ -11,7 +11,6 @@ class Grid extends Component {
       super();
       this.rows = this.state.gridHeight / this.state.cellSize;
       this.columns = this.state.gridWidth / this.state.cellSize;
-
       this.grid = this.renderGrid();
   }
 
@@ -29,6 +28,7 @@ class Grid extends Component {
   renderGrid = () => {
     var grid = [];
 
+    // Set 2D array by row
     for (let y = 0; y < this.rows; y++) {
       grid[y] = [];
       for (let x = 0; x < this.columns; x++) {
@@ -39,7 +39,6 @@ class Grid extends Component {
     return grid;
   };
 
-  // Set cell state for each cell in the grid
   renderCellState = () => {
     var cells = [];
     
@@ -66,20 +65,18 @@ class Grid extends Component {
       var y = Math.floor(positionY / this.state.cellSize);
   
       // Check for valid cell in grid
-      if (x >= 0 && x < this.columns) {
-        if (y >= 0 && y < this.rows) {
+      if (y >= 0 && y < this.rows) {
+        if (x >= 0 && x < this.columns) {
           this.grid[y][x] = !this.grid[y][x];
         };
       };
   
-      // Re-render cells with updated state values
       this.setState({ cellGrid: this.renderCellState() });
     };
   };
 
   // TODO: refactor calculate neighbors without options array
-  // For each cell, check neighbor state to determine if it lives or dies
-  calculateNeighbors = (grid, x, y) => {
+  calculateNeighborState = (grid, x, y) => {
     var liveNeighbors = 0;
     // Possible surrounding cell combinations - excludes current cell
     var options = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
@@ -90,31 +87,25 @@ class Grid extends Component {
       var x1 = x + checkOptions[1];
 
       // Check for valid cell in grid
-      if (x1 >= 0 && x1 < this.columns) {
-        if (y1 >= 0 && y1 < this.rows) {
+      if (y1 >= 0 && y1 < this.rows) {
+        if (x1 >= 0 && x1 < this.columns) {
           if (grid[y1][x1]) {
             liveNeighbors++;
-          }
-        }
-      }
-      // if (x1 >= 0 && x1 < this.columns && y1 >= 0 && y1 < this.rows && grid[y1][x1]) {
-      //   liveNeighbors++;
-      // };
+          };
+        };
+      };
     };
 
     return liveNeighbors;
   };
 
   runGame = () => {
-    // Start with an empty grid to calculate next state
     var newGrid = this.renderGrid();
 
-    // Loop through 2D array to check each cell
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.columns; x++) {
-        var neighbors = this.calculateNeighbors(this.grid, x, y);
+        var neighbors = this.calculateNeighborState(this.grid, x, y);
 
-        // If cell is live, check if 2, or 3, neighbors are also live
         if (this.grid[y][x]) {
           if (neighbors === 2 || neighbors === 3) {
             newGrid[y][x] = true;
@@ -122,7 +113,6 @@ class Grid extends Component {
             newGrid[y][x] = false;
           };
         } else {
-          // If cell is dead and has 3 live neighbors, make it live
           if (!this.grid[y][x] && neighbors === 3) {
             newGrid[y][x] = true;
           };
@@ -132,8 +122,6 @@ class Grid extends Component {
 
     // Set current state to new state
     this.grid = newGrid;
-
-    // Re-render cells based on updated state
     this.setState({ cellGrid: this.renderCellState() });
     this.setState({ generation: this.state.generation + 1 });
   };
