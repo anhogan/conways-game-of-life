@@ -23,15 +23,13 @@ Users can create their own cell configurations then use the action buttons to ma
 
 Clicking `Stop` turns the running state to false and clears the `intervalTimeout` interval. The `Clear` button renders an empty grid configuration, turns all cell states to dead, and renders the cell placements for the grid. Selecting the `Random` button will create a random assortment of live cells on the grid by using a `Math.random()` call.
 
+Users can see a generation render one step at a time with the `Next Generation` button. This isn't tied to the `intervalTimeout` and doesn't update game state to running to allow for all other user functions that are tied to a false running state to work (toggle cell state, clear the grid, and generate a random configuration).
+
 ---
 #### **File Structure**
 `App.js`
 
 Contains `GameBoard` import
-
-`config` Folder
-
-Contains exports for grid width and grid height variables to be used across multiple files
 
 `components` Folder
 

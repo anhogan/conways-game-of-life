@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { gridWidth, gridHeight } from '../config/grid_variables';
-
 import Cell from './Cell';
 import InputBoxes from './InputBoxes';
 import BoardControls from './BoardControls';
@@ -12,13 +10,15 @@ class Grid extends Component {
   // Specify how many rows and columns will be appear on the grid
   constructor() {
       super();
-      this.rows = gridHeight / this.state.cellSize;
-      this.columns = gridWidth / this.state.cellSize;
+      this.rows = this.state.gridHeight / this.state.cellSize;
+      this.columns = this.state.gridWidth / this.state.cellSize;
 
-      this.grid = this.renderEmptyGrid();
+      this.grid = this.renderGrid();
   }
 
   state = {
+    gridHeight: 600,
+    gridWidth: 600,
     cellGrid: [],
     cellSize: 24,
     running: false,
@@ -27,7 +27,7 @@ class Grid extends Component {
   };
 
   // Clear the grid of all active cells
-  renderEmptyGrid = () => {
+  renderGrid = () => {
     var grid = [];
 
     for (let y = 0; y < this.rows; y++) {
@@ -41,7 +41,7 @@ class Grid extends Component {
   };
 
   // Create cells and add them to the grid at specified coordinates
-  renderCells = () => {
+  renderCellState = () => {
     var cells = [];
     
     for (let y = 0; y < this.rows; y++) {
@@ -82,7 +82,7 @@ class Grid extends Component {
       };
   
       // Re-render cells with updated state values
-      this.setState({ cellGrid: this.renderCells() });
+      this.setState({ cellGrid: this.renderCellState() });
     };
   };
 
@@ -108,7 +108,7 @@ class Grid extends Component {
 
   runGame = () => {
     // Start with an empty grid to calculate next state
-    var newGrid = this.renderEmptyGrid();
+    var newGrid = this.renderGrid();
 
     // Loop through 2D array to check each cell
     for (let y = 0; y < this.rows; y++) {
@@ -135,8 +135,15 @@ class Grid extends Component {
     this.grid = newGrid;
 
     // Re-render cells based on updated state
-    this.setState({ cellGrid: this.renderCells() });
+    this.setState({ cellGrid: this.renderCellState() });
     this.setState({ generation: this.state.generation + 1 });
+  };
+
+  // See animation one step at a time
+  advanceGeneration = () => {
+    if (!this.state.running) {
+      this.runGame();
+    };
   };
 
   // Invoke the run game function
@@ -158,8 +165,8 @@ class Grid extends Component {
 
   // Set all cell states to dead and generation to 0
   clearGrid = () => {
-    this.grid = this.renderEmptyGrid();
-    this.setState({ cellGrid: this.renderCells() });
+    this.grid = this.renderGrid();
+    this.setState({ cellGrid: this.renderCellState() });
     this.setState({ generation: 0 });
   };
 
@@ -171,7 +178,7 @@ class Grid extends Component {
         };
       };
   
-      this.setState({ cellGrid: this.renderCells() });
+      this.setState({ cellGrid: this.renderCellState() });
     };
   };
 
@@ -194,14 +201,14 @@ class Grid extends Component {
           <GridColumnDiv>
             <GridDiv
               style={{ 
-                width: gridWidth,
-                height: gridHeight,
+                width: this.state.gridWidth,
+                height: this.state.gridHeight,
                 backgroundSize: `${this.state.cellSize}px ${this.state.cellSize}px`
               }}
               onClick={this.toggleCellState}
               ref={(game) => { this.gridRef = game }}>
               {this.state.cellGrid.map(cell => (
-                <Cell key={`${cell.x}, ${cell.y}`} x={cell.x} y={cell.y} cellSize={this.state.cellSize} />
+                <Cell key={`${cell.x}, ${cell.y}`} x={cell.x} y={cell.y} cellSize={this.state.cellSize} running={this.state.running} />
               ))}
             </GridDiv>
           </GridColumnDiv>
@@ -210,7 +217,7 @@ class Grid extends Component {
             <InputContainer>
               <InputBoxes cellSize={this.state.cellSize} interval={this.state.interval} handleCellSizeChange={this.handleCellSizeChange} handleIntervalChange={this.handleIntervalChange} />
             </InputContainer>
-            <BoardControls startGame={this.startGame} stopGame={this.stopGame} clearGrid={this.clearGrid} randomConfig={this.randomConfig} />
+            <BoardControls startGame={this.startGame} stopGame={this.stopGame} clearGrid={this.clearGrid} randomConfig={this.randomConfig} advanceGeneration={this.advanceGeneration} />
           </ActionColumnDiv>
         </ContentContainerDiv>
       </div>
