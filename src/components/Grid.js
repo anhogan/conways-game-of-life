@@ -24,11 +24,11 @@ class Grid extends Component {
     generation: 0
   };
 
-  // Create a grid where all states are toggles to dead
+  // Create a grid where all states are toggled to dead
   renderGrid = () => {
     var grid = [];
 
-    // Set 2D array by row
+    // Set 2D array by row: grid[row][column]
     for (let y = 0; y < this.rows; y++) {
       grid[y] = [];
       for (let x = 0; x < this.columns; x++) {
@@ -55,7 +55,9 @@ class Grid extends Component {
 
   toggleCellState = (e) => {    
     if (!this.state.running) {
+      // Get location of click on grid reference
       var clickPosition = this.gridRef.getBoundingClientRect();
+      
       var positionX = e.clientX - clickPosition.left - 1;
       // Account for vertical scroll by adding pageYOffset
       var positionY = e.clientY - (clickPosition.top + window.pageYOffset) - 1;
@@ -75,11 +77,11 @@ class Grid extends Component {
     };
   };
 
-  calculateNeighborState = (grid, coords) => {
+  calculateNeighborState = (coords) => {
     var liveNeighbors = 0;
 
     for (let y = coords.y - 1; y < coords.y + 1; y++) {
-      for (let x = coords.x - 1; x < coords.y + 1; x++) {
+      for (let x = coords.x - 1; x < coords.x + 1; x++) {
         // Remove current cell from analysis
         if (y === coords.y && x === coords.x) {
           continue;
@@ -88,13 +90,13 @@ class Grid extends Component {
         // Check for valid cell in grid
         if (y >= 0 && y < this.rows) {
           if (x >= 0 && x < this.columns) {
-            if (grid[y][x]) {
+            if (this.grid[y][x]) {
               liveNeighbors++;
-            };
-          };
-        };
-      };
-    };
+            }
+          }
+        }
+      }
+    }
 
     return liveNeighbors;
   };
@@ -104,7 +106,7 @@ class Grid extends Component {
 
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.columns; x++) {
-        var neighbors = this.calculateNeighborState(this.grid, {x, y});
+        var neighbors = this.calculateNeighborState({x, y});
 
         if (this.grid[y][x]) {
           if (neighbors === 2 || neighbors === 3) {
@@ -120,7 +122,6 @@ class Grid extends Component {
       };
     };
 
-    // Set current state to new state
     this.grid = newGrid;
     this.setState({ cellGrid: this.renderCellState() });
     this.setState({ generation: this.state.generation + 1 });
@@ -159,7 +160,8 @@ class Grid extends Component {
     if (!this.state.running) {
       for (let y = 0; y < this.rows; y++) {
         for (let x = 0; x < this.columns; x++) {
-          this.grid[y][x] = (Math.random() >= 0.5);
+          // Cover at least half the grid with live cells
+          this.grid[y][x] = (Math.random() >= .5);
         };
       };
   
