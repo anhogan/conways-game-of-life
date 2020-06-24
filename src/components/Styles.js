@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Header = styled.h1`
   margin-bottom: .5%;
-  color: midnightblue
+  color: midnightblue;
 `;
 
 export const RulesButton = styled.button`
@@ -18,8 +18,8 @@ export const RulesButton = styled.button`
     color: white;
   };
   &:focus {
-    outline: none
-  }
+    outline: none;
+  };
 `;
 
 export const ModalDiv = styled.div`
@@ -36,15 +36,15 @@ export const ModalDiv = styled.div`
   visibility: visible;
   @supports (offset-rotate: 0deg) {
     offset-rotate: 0deg;
-  }
+  };
   h2 {
     border-bottom: 1px solid #ccc;
     padding: 1rem;
     margin: 0;
-  }
+  };
   .content {
     padding: 1rem;
-  }
+  };
   .playBtn {
     border-top: 1px solid #ccc;
     background: lightgray;
@@ -61,8 +61,8 @@ export const ModalDiv = styled.div`
         background: midnightblue;
         color: white;
       };
-    }
-  }
+    };
+  };
 `;
 
 export const ContentContainerDiv = styled.div`
@@ -120,8 +120,8 @@ export const Inputs = styled.input`
   margin: 0 auto;
   text-align: center;
   &:focus {
-    outline: none
-  }
+    outline: none;
+  };
 `;
 
 export const Labels = styled.label`
@@ -150,6 +150,6 @@ export const UserButtons = styled.button`
     color: white;
   };
   &:focus {
-    outline: none
-  }
+    outline: none;
+  };
 `;
