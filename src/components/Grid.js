@@ -55,14 +55,14 @@ class Grid extends Component {
     return cells;
   };
 
-  // Determine cell clicked by window position of the mouse
+  // Determine cell clicked by window position of the mouse in the grid reference
   getOffset = () => {
-    var rect = this.gridRef.getBoundingClientRect();
-    var element = document.documentElement;
+    var position = this.gridRef.getBoundingClientRect();
 
     return {
-      x: (rect.left + window.pageXOffset) - element.clientLeft - 1,
-      y: (rect.top + window.pageYOffset) - element.clientTop - 1
+      x: position.left,
+      // Add pageYOffset to account for vertical scrolling on y axis
+      y: position.top + window.pageYOffset
     };
   };
 
@@ -206,9 +206,13 @@ class Grid extends Component {
                 backgroundSize: `${this.state.cellSize}px ${this.state.cellSize}px`
               }}
               onClick={this.toggleCellState}
-              ref={(game) => { this.gridRef = game }}>
+              ref={(grid) => { this.gridRef = grid }}>
               {this.state.cellGrid.map(cell => (
-                <Cell key={`${cell.x}, ${cell.y}`} x={cell.x} y={cell.y} cellSize={this.state.cellSize} running={this.state.running} />
+                <Cell 
+                  key={`${cell.x}, ${cell.y}`} 
+                  x={cell.x} 
+                  y={cell.y} 
+                  cellSize={this.state.cellSize}/>
               ))}
             </GridDiv>
           </GridColumnDiv>
