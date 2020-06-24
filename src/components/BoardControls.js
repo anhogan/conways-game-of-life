@@ -9,9 +9,9 @@ class BoardControls extends Component {
         <ButtonDiv>
           <UserButtons onClick={this.props.startGame}>Start</UserButtons>
           <UserButtons onClick={this.props.stopGame}>Stop</UserButtons>
-          <UserButtons onClick={this.props.clearGrid}>Clear</UserButtons>
-          <UserButtons onClick={this.props.randomConfig}>Random</UserButtons>
           <UserButtons onClick={this.props.advanceGeneration}>Next Generation</UserButtons>
+          <UserButtons onClick={this.props.randomConfig}>Random</UserButtons>
+          <UserButtons onClick={this.props.clearGrid}>Clear</UserButtons>
         </ButtonDiv>
       </div>
     );

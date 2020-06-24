@@ -7,7 +7,6 @@ import BoardControls from './BoardControls';
 import { ContentContainerDiv, GridColumnDiv, ActionColumnDiv, GridDiv, GenerationText, InputContainer } from './Styles';
 
 class Grid extends Component {
-  // Specify how many rows and columns will be appear on the grid
   constructor() {
       super();
       this.rows = this.state.gridHeight / this.state.cellSize;
@@ -26,13 +25,13 @@ class Grid extends Component {
     generation: 0
   };
 
-  // Clear the grid of all active cells
+  // Create a grid where all states are toggles to dead
   renderGrid = () => {
     var grid = [];
 
     for (let y = 0; y < this.rows; y++) {
       grid[y] = [];
-      for (let x = 0; x < this.state.columns; x++) {
+      for (let x = 0; x < this.columns; x++) {
         grid[y][x] = false;
       };
     };
@@ -40,7 +39,7 @@ class Grid extends Component {
     return grid;
   };
 
-  // Create cells and add them to the grid at specified coordinates
+  // Set cell state for each cell in the grid
   renderCellState = () => {
     var cells = [];
     
@@ -55,30 +54,22 @@ class Grid extends Component {
     return cells;
   };
 
-  // Determine cell clicked by window position of the mouse in the grid reference
-  getOffset = () => {
-    var position = this.gridRef.getBoundingClientRect();
-
-    return {
-      x: position.left,
-      // Add pageYOffset to account for vertical scrolling on y axis
-      y: position.top + window.pageYOffset
-    };
-  };
-
-  // If cell is clicked, toggle its state
   toggleCellState = (e) => {    
     if (!this.state.running) {
-      var offset = this.getOffset();
-      var offsetX = e.clientX - offset.x - 1;
-      var offsetY = e.clientY - offset.y - 1;
+      var clickPosition = this.gridRef.getBoundingClientRect();
+      var positionX = e.clientX - clickPosition.left - 1;
+      // Account for vertical scroll by adding pageYOffset
+      var positionY = e.clientY - (clickPosition.top + window.pageYOffset) - 1;
   
-      var x = Math.floor(offsetX / this.state.cellSize);
-      var y = Math.floor(offsetY / this.state.cellSize);
+      // Divide by cell size to get (x, y) coordinates in grid
+      var x = Math.floor(positionX / this.state.cellSize);
+      var y = Math.floor(positionY / this.state.cellSize);
   
-      // Toggle state if cell is within grid
-      if (x >= 0 && x < this.columns && y >= 0 && y < this.rows) {
-        this.grid[y][x] = !this.grid[y][x];
+      // Check for valid cell in grid
+      if (x >= 0 && x < this.columns) {
+        if (y >= 0 && y < this.rows) {
+          this.grid[y][x] = !this.grid[y][x];
+        };
       };
   
       // Re-render cells with updated state values
@@ -86,6 +77,7 @@ class Grid extends Component {
     };
   };
 
+  // TODO: refactor calculate neighbors without options array
   // For each cell, check neighbor state to determine if it lives or dies
   calculateNeighbors = (grid, x, y) => {
     var liveNeighbors = 0;
@@ -97,10 +89,17 @@ class Grid extends Component {
       var y1 = y + checkOptions[0];
       var x1 = x + checkOptions[1];
 
-      // If valid cell and grid at the neighbor cell is live, add one to neighbors
-      if (x1 >= 0 && x1 < this.columns && y1 >= 0 && y1 < this.rows && grid[y1][x1]) {
-        liveNeighbors++;
-      };
+      // Check for valid cell in grid
+      if (x1 >= 0 && x1 < this.columns) {
+        if (y1 >= 0 && y1 < this.rows) {
+          if (grid[y1][x1]) {
+            liveNeighbors++;
+          }
+        }
+      }
+      // if (x1 >= 0 && x1 < this.columns && y1 >= 0 && y1 < this.rows && grid[y1][x1]) {
+      //   liveNeighbors++;
+      // };
     };
 
     return liveNeighbors;
@@ -139,14 +138,13 @@ class Grid extends Component {
     this.setState({ generation: this.state.generation + 1 });
   };
 
-  // See animation one step at a time
+  // Step through the animation one generation at a time
   advanceGeneration = () => {
     if (!this.state.running) {
       this.runGame();
     };
   };
 
-  // Invoke the run game function
   startGame = () => {
     if (!this.state.running) {
       this.setState({ running: true }, () => {
@@ -163,7 +161,6 @@ class Grid extends Component {
     });
   };
 
-  // Set all cell states to dead and generation to 0
   clearGrid = () => {
     this.grid = this.renderGrid();
     this.setState({ cellGrid: this.renderCellState() });
