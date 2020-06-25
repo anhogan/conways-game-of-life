@@ -80,10 +80,10 @@ class Grid extends Component {
   calculateNeighborState = (coords) => {
     var liveNeighbors = 0;
 
-    for (let y = coords.y - 1; y < coords.y + 1; y++) {
-      for (let x = coords.x - 1; x < coords.x + 1; x++) {
+    for (let y = coords.y - 1; y <= coords.y + 1; y++) {
+      for (let x = coords.x - 1; x <= coords.x + 1; x++) {
         // Remove current cell from analysis
-        if (y === coords.y && x === coords.x) {
+        if (x === coords.x && y === coords.y) {
           continue;
         };
 
@@ -92,11 +92,11 @@ class Grid extends Component {
           if (x >= 0 && x < this.columns) {
             if (this.grid[y][x]) {
               liveNeighbors++;
-            }
-          }
-        }
-      }
-    }
+            };
+          };
+        };
+      };
+    };
 
     return liveNeighbors;
   };

@@ -129,10 +129,22 @@ export const Labels = styled.label`
   color: midnightblue;
 `;
 
-export const ButtonDiv = styled.div`
+export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 5%;
+`;
+
+export const TopButtonDiv = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+export const BottomButtonDiv = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  padding: 2.5%;
 `;
 
 export const UserButtons = styled.button`
@@ -144,6 +156,24 @@ export const UserButtons = styled.button`
   font-size: 0.8rem;
   line-height: 1;
   margin: 1% auto;
+  &:hover {
+    cursor: pointer;
+    background: midnightblue;
+    color: white;
+  };
+  &:focus {
+    outline: none;
+  };
+`;
+
+export const BottomUserButtons = styled.button`
+  width: 25%;
+  border: 0;
+  background: mediumspringgreen;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  line-height: 1;
   &:hover {
     cursor: pointer;
     background: midnightblue;
