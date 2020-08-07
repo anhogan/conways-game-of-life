@@ -8,7 +8,4 @@ html, body {
 
 body {
   background: #eee;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
 }

@@ -1,36 +1,33 @@
 import React, { Component } from 'react';
 
 import Grid from './Grid';
-import BoardControls from './BoardControls';
 import Rules from './Rules';
 
-import { RulesButton } from './Styles';
+import { Header, RulesButton } from './Styles';
 
 class GameBoard extends Component {
   state = {
     open: false,
-    size: [25, 25]
-  }
+  };
 
   openModal = () => {
-    this.setState({ open: true })
-  }
+    this.setState({ open: true });
+  };
 
   closeModal = () => {
-    this.setState({ open: false })
-  }
+    this.setState({ open: false });
+  };
 
   render() {
     return (
       <div>
-        <h1>Conway's Game of Life</h1>
+        <Header>Conway's Game of Life</Header>
         <RulesButton onClick={this.openModal}>Rules</RulesButton>
-        <Grid size={this.state.size} />
-        <BoardControls size={this.state.size} />
+        <Grid />
         <Rules open={this.state.open} closeModal={this.closeModal} />
       </div>
     );
-  }
-}
+  };
+};
 
 export default GameBoard;

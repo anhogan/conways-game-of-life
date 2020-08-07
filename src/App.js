@@ -11,7 +11,7 @@ class App extends Component {
         <GameBoard />
       </div>
     );
-  }
-}
+  };
+};
 
 export default App;

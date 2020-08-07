@@ -1,68 +1,59 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ***Conway's Game of Life***
+### **React Implementation**
 
-## Available Scripts
+The universe of the Game of Life consists of a two-dimensional grid containing square cells with one of two possible states: live or dead. Each cell has eight neighbors horizontally, vertically, and diagonally. During the animation, cell transitions occur based on the following rules:
 
-In the project directory, you can run:
+* Any cell with two or three live neighbors survives
+* Any dead cell with three live neighbors becomes a live cell
+* Any live cell with less than two live neighbors, or more than three live neighbors, dies
+---
+#### **Build Process**
 
-### `yarn start`
+At it's core, the Game of Life examines each cell in a two-dimensional grid and calculates the state for each neighboring cell. In code, a 2D array created for the grid container and its corresponding cells is an efficient rendering method. For this implementaiton, the grid is built on a predefined container and cells are created as background images using a specified cell size (in pixels). To determine the number of rows, and columns, for the grid, the following calculations were used:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+`rows = gridHeight / cellSize`
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+`columns = gridWidth / cellSize`
 
-### `yarn test`
+Cell positioning is determined by looping through the `cellGrid` array (consisting of nested sub-arrays with x, y coordinate values) and setting CSS values for `left`, `top`, `width`, and `height` based on dimensions for each cell size and the coordinates passed down as x and y values. 1 is added to the `left` and `top` values to account for the 1px border on each cell. In addition, 1 is subtracted from the overall width and height to round out the correct placement in compliance with the border standards.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+After building the grid, cell state toggling comes from getting the window location of the click and calculating the offset to the corresponding cell. If a cell within the grid is clicked, state is toggled between live and dead with a visual color change reflecting the toggling of the 2D grid array at the [row][column] pairing. 
 
-### `yarn build`
+Users can create their own cell configurations then use the action buttons to manage game play. `Start` toggles game running state to true and creates an interval based on the current state's interval value, which is stored as an `intervalTimeout` variable, and invokes the `runGame` method. During animation, an empty grid is rendered initially to store the next state configuration. Two nested for loops call the `calculateNeighborState` method by passing in the grid at its current state, along with the current x, y coordinates. `calculateNeighborState` goes through the given cell and all it's potential neighbor options, returning the number of live neightbor cells. If the current cell is live and has 2, or 3, live neighbors, it remains alive. Otherwise it dies. Alternatively, if the current cell is dead and has 3 live neighbors, it becomes alive. This newGrid of live vs. dead cells is set the grid state, `renderCells` is called to put the cells in their corresponding states in accordance with the grid state, and the generation is advanced by 1.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Clicking `Stop` turns the running state to false and clears the `intervalTimeout` interval. The `Clear` button renders an empty grid configuration, turns all cell states to dead, and renders the cell placements for the grid. Selecting the `Random` button will create a random assortment of live cells on the grid by using a `Math.random()` call.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Users can see a generation render one step at a time with the `Next Generation` button. This isn't tied to the `intervalTimeout` and doesn't update game state to running to allow for all other user functions that are tied to a false running state to work (toggle cell state, clear the grid, and generate a random configuration).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
+#### **File Structure**
+`App.js`
 
-### `yarn eject`
+Contains `GameBoard` import
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+`components` Folder
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Contains the following files:
+* `BoardControls.js`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  Contains user action buttons for Start, Stop, Clear, and Random
+* `Cell.js`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+  Contains structured div for each cell on the grid
+* `GameBoard.js`
 
-## Learn More
+  Contains the header text, rules button, and the `Grid` component import. Rules button toggles a modal with game rules for participants
+* `Grid.js`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  Contains the grid div that renders a `Cell` component for each item in the `cellGrid` array. Has imports for `InputBoxes` that control cell size and animation speed. In addition, it has a `BoardControls` import for the user action buttons
+* `InputBoxes.js`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  Contains input boxes for cell size and animation speed
+* `Rules.js`
 
-### Code Splitting
+  Modal layout containing the rules for users to interact with the game
+* `Styles.js`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+  Styling file using `styled-components` to export the various element styles
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+---
