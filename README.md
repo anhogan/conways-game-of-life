@@ -6,8 +6,11 @@ The universe of the Game of Life consists of a two-dimensional grid containing s
 * Any cell with two or three live neighbors survives
 * Any dead cell with three live neighbors becomes a live cell
 * Any live cell with less than two live neighbors, or more than three live neighbors, dies
+
+Built using React with a CSS Gradient for the grid
+
 ---
-#### **Build Process**
+### **Build Process**
 
 At it's core, the Game of Life examines each cell in a two-dimensional grid and calculates the state for each neighboring cell. In code, a 2D array created for the grid container and its corresponding cells is an efficient rendering method. For this implementaiton, the grid is built on a predefined container and cells are created as background images using a specified cell size (in pixels). To determine the number of rows, and columns, for the grid, the following calculations were used:
 
@@ -26,7 +29,7 @@ Clicking `Stop` turns the running state to false and clears the `intervalTimeout
 Users can see a generation render one step at a time with the `Next Generation` button. This isn't tied to the `intervalTimeout` and doesn't update game state to running to allow for all other user functions that are tied to a false running state to work (toggle cell state, clear the grid, and generate a random configuration).
 
 ---
-#### **File Structure**
+### **File Structure**
 `App.js`
 
 Contains `GameBoard` import
@@ -57,3 +60,21 @@ Contains the following files:
   Styling file using `styled-components` to export the various element styles
 
 ---
+### Status
+The app has been fully developed to simulate Conway's Game of Life. Users can interact with the grid by toggling cell state on / off and starting the simulation.
+
+Users can further personalize the experience by changing the grid size, generating a random start state, or by stepping through cell generations one at a time.
+
+---
+
+### Known Issues
+All known issues, or currently in progress features, can be found under the issues tab
+
+---
+
+### Work on this Repo
+Questions, comments, or concerns can be submitted as an issue on this repository. As an open-source project, all developers are encouraged to work on active issues, or implement new features, by pushing to a separate feature branch. All commits to master must be approved prior to merging.
+
+To work on this repository, clone it and run `yarn install`
+
+Start the app by running `yarn start`
